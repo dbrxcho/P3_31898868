@@ -3,10 +3,16 @@ const request = require('supertest');
 const app = require('../app');
 
 let token;
+let server;
 
 beforeAll(async () => {
+  // Levanta el servidor en un puerto dinámico
+  server = app.listen(0);
+
+  // Sincroniza la base de datos en modo limpio
   await sequelize.sync({ force: true });
 
+  // Registro de usuario de prueba
   await request(app)
     .post('/auth/register')
     .send({
@@ -15,6 +21,7 @@ beforeAll(async () => {
       password: 'Test1234'
     });
 
+  // Login para obtener el token
   const res = await request(app)
     .post('/auth/login')
     .send({
@@ -26,6 +33,12 @@ beforeAll(async () => {
 
   expect(res.statusCode).toBe(200);
   token = res.body.data.token;
+});
+
+afterAll(async () => {
+  // Cierra la conexión a la base de datos y el servidor
+  await sequelize.close();
+  server.close();
 });
 
 describe('Users endpoints', () => {
