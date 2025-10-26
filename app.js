@@ -44,11 +44,7 @@ app.get('/about', (req, res) => {
       seccion: "2"
     }
   });
-});
-
-app.use('/users', authMiddleware, usersRouter); 
-app.use('/auth', authRouter); 
-app.use('/', indexRouter);    
+});   
 
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
