@@ -1,21 +1,33 @@
-var express = require('express');
-var path = require('path');
-var cookieParser = require('cookie-parser');
-var logger = require('morgan');
+require('dotenv').config();
+const { sequelize } = require('./models');
 
-var indexRouter = require('./routes/index');
-var usersRouter = require('./routes/users');
+const authRouter = require('./routes/auth');
+const express = require('express');
+const app = express();
+const path = require('path');
+const cookieParser = require('cookie-parser');
+const logger = require('morgan');
 
-var app = express();
+const indexRouter = require('./routes/index');
+const usersRouter = require('./routes/users'); 
+const authMiddleware = require('./middlewares/auth');
+
+const { swaggerUi, swaggerSpec } = require('./swagger');
+
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
+
+
+
 
 app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
+app.use('/auth', authRouter);
+app.use('/users', authMiddleware, usersRouter);
 
 app.use('/', indexRouter);
-app.use('/users', usersRouter);
 
 app.get('/ping', (req, res) => {
   res.status(200).send();
@@ -31,5 +43,9 @@ app.get('/about', (req, res) => {
     }
   });
 });
+
+app.use('/users', authMiddleware, usersRouter); 
+app.use('/auth', authRouter); 
+app.use('/', indexRouter);    
 
 module.exports = app;
