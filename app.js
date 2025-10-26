@@ -1,3 +1,5 @@
+console.log("Iniciando servidor...");
+
 require('dotenv').config();
 const { sequelize } = require('./models');
 
@@ -47,5 +49,10 @@ app.get('/about', (req, res) => {
 app.use('/users', authMiddleware, usersRouter); 
 app.use('/auth', authRouter); 
 app.use('/', indexRouter);    
+
+const PORT = process.env.PORT || 3000;
+app.listen(PORT, () => {
+  console.log(`Servidor corriendo en puerto ${PORT}`);
+});
 
 module.exports = app;
