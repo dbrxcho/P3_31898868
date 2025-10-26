@@ -1,11 +1,22 @@
 const { sequelize } = require('../models');
-beforeAll(async () => {
-  await sequelize.sync(); 
-});
-
-
 const request = require('supertest');
 const app = require('../app');
+
+let server;
+
+beforeAll(async () => {
+  // Levanta el servidor en un puerto dinámico
+  server = app.listen(0);
+
+  // Sincroniza la base de datos
+  await sequelize.sync();
+});
+
+afterAll(async () => {
+  // Cierra la conexión a la base de datos y el servidor
+  await sequelize.close();
+  server.close();
+});
 
 describe('Auth endpoints', () => {
   it('debería registrar un nuevo usuario', async () => {
@@ -31,4 +42,3 @@ describe('Auth endpoints', () => {
     expect(res.body.data.token).toBeDefined();
   });
 });
-
