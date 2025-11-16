@@ -1,12 +1,18 @@
-var express = require('express');
-var path = require('path');
-var cookieParser = require('cookie-parser');
-var logger = require('morgan');
+const express = require('express');
+const path = require('path');
+const cookieParser = require('cookie-parser');
+const logger = require('morgan');
 
-var indexRouter = require('./routes/index');
-var usersRouter = require('./routes/users');
+const indexRouter = require('./routes/index');
+const usersRouter = require('./routes/users');
+const productsRouter = require('./routes/products');
+const categoriesRouter = require('./routes/categories');
+const tagsRouter = require('./routes/tags');
+const swaggerUi = require('swagger-ui-express');
+const swaggerSpec = require('./swagger');
+const { sequelize } = require('./models');
 
-var app = express();
+const app = express();
 
 app.use(logger('dev'));
 app.use(express.json());
@@ -14,13 +20,16 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
+// Rutas
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
+app.use('/products', productsRouter);
+app.use('/categories', categoriesRouter);
+app.use('/tags', tagsRouter);
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 
-app.get('/ping', (req, res) => {
-  res.status(200).send();
-});
-
+// Health y About
+app.get('/ping', (req, res) => res.status(200).send());
 app.get('/about', (req, res) => {
   res.status(200).json({
     status: "success",
@@ -32,4 +41,10 @@ app.get('/about', (req, res) => {
   });
 });
 
+// Sincroniza la base de datos
+sequelize.sync().then(() => {
+  console.log('Base de datos sincronizada');
+});
+
 module.exports = app;
+
