@@ -14,7 +14,7 @@ const options = {
     description: 'Servidor local'
   },
   {
-    url: 'https://tu-app.onrender.com',
+    url: 'https://p3-31898868-1-6ia2.onrender.com',
     description: 'Servidor en Render'
   }
 ],
