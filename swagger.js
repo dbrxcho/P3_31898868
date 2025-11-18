@@ -9,16 +9,15 @@ const options = {
       description: 'Documentación de la API para la gestión de productos, categorías y etiquetas.',
     },
     servers: [
-  {
-    url: 'http://localhost:3000',
-    description: 'Servidor local'
-  },
-  {
-    url: 'https://p3-31898868-1-6ia2.onrender.com/api-docs',
-    description: 'Servidor en Render'
-  }
-],
-    
+      {
+        url: 'http://localhost:3000',
+        description: 'Servidor local'
+      },
+      {
+        url: 'https://p3-31898868-1-6ia2.onrender.com',
+        description: 'Servidor en Render'
+      }
+    ],
     components: {
       securitySchemes: {
         bearerAuth: {
