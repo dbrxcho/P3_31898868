@@ -9,11 +9,15 @@ const options = {
       description: 'Documentación de la API para la gestión de productos, categorías y etiquetas.',
     },
     servers: [
-      {
-        url: 'http://localhost:3000',
-        description: 'Servidor local'
-      }
-    ],
+  {
+    url: 'http://localhost:3000',
+    description: 'Servidor local'
+  },
+  {
+    url: 'https://tu-app.onrender.com',
+    description: 'Servidor en Render'
+  }
+],
     
     components: {
       securitySchemes: {
