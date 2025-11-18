@@ -31,8 +31,15 @@ app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 
 
 
-// Health y About
-app.get('/ping', (req, res) => res.status(200).send());
+// Health, Ping y About
+app.get('/ping', (req, res) => {
+  res.status(200).send(); // simple respuesta OK
+});
+
+app.get('/health', (req, res) => {
+  res.status(200).json({ status: 'ok' }); // endpoint de health para tests y Render
+});
+
 app.get('/about', (req, res) => {
   res.status(200).json({
     status: "success",
