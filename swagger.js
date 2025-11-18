@@ -10,12 +10,12 @@ const options = {
     },
     servers: [
       {
-        url: 'http://localhost:3000',
-        description: 'Servidor local'
-      },
-      {
         url: 'https://p3-31898868-1-6ia2.onrender.com',
         description: 'Servidor en Render'
+      },
+      {
+        url: 'http://localhost:3000',
+        description: 'Servidor local'
       }
     ],
     components: {
@@ -77,4 +77,3 @@ const options = {
 const swaggerSpec = swaggerJsdoc(options);
 
 module.exports = swaggerSpec;
-
