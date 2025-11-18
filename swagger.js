@@ -14,7 +14,7 @@ const options = {
     description: 'Servidor local'
   },
   {
-    url: 'https://p3-31898868-1-6ia2.onrender.com',
+    url: 'https://p3-31898868-1-6ia2.onrender.com/api-docs',
     description: 'Servidor en Render'
   }
 ],
