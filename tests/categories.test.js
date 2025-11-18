@@ -41,3 +41,7 @@ describe('Categories API', () => {
     expect(Array.isArray(res.body.data)).toBe(true);
   });
 });
+afterAll(async () => {
+  await sequelize.close();
+});
+

@@ -3,8 +3,10 @@ module.exports = (sequelize, DataTypes) => {
     name: { type: DataTypes.STRING, allowNull: false, unique: true },
     description: { type: DataTypes.TEXT, allowNull: true }
   }, { tableName: 'categories' });
+
   Category.associate = (models) => {
     Category.hasMany(models.Product, { foreignKey: 'categoryId' });
   };
+
   return Category;
 };

@@ -26,7 +26,10 @@ app.use('/users', usersRouter);
 app.use('/products', productsRouter);
 app.use('/categories', categoriesRouter);
 app.use('/tags', tagsRouter);
+app.use('/auth', require('./routes/auth'));
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
+
+
 
 // Health y About
 app.get('/ping', (req, res) => res.status(200).send());
@@ -39,11 +42,6 @@ app.get('/about', (req, res) => {
       seccion: "2"
     }
   });
-});
-
-// Sincroniza la base de datos
-sequelize.sync().then(() => {
-  console.log('Base de datos sincronizada');
 });
 
 module.exports = app;

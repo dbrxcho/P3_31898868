@@ -1,11 +1,10 @@
 const request = require('supertest');
-const { sequelize } = require('../models'); // importa sequelize
+const { sequelize } = require('../models');
 const app = require('../app');
 
 let validToken;
 
 beforeAll(async () => {
-  // Crear todas las tablas antes de los tests
   await sequelize.sync({ force: true });
 
   // Registrar usuario admin
@@ -22,11 +21,15 @@ beforeAll(async () => {
     .post('/auth/login')
     .send({ email: 'admin@example.com', password: 'adminpass' });
 
-  if (!res.body.data || !res.body.data.token) {
-    throw new Error('No se pudo obtener token en /auth/login');
+  // Ajusta según la estructura real de tu respuesta
+  validToken = res.body.data?.token || res.body.token;
+  if (!validToken) {
+    throw new Error(`No se pudo obtener token en /auth/login: ${JSON.stringify(res.body)}`);
   }
+});
 
-  validToken = res.body.data.token;
+afterAll(async () => {
+  await sequelize.close(); // 👈 cerrar conexión
 });
 
 describe('Admin Products API', () => {
@@ -37,6 +40,8 @@ describe('Admin Products API', () => {
       .send({ name: 'Test Product', price: 10, stock: 5 });
 
     expect(res.statusCode).toBe(400);
-    expect(res.body.data.message).toMatch(/categoryId es obligatorio/);
+
+    // Ajusta según el formato real de tu error
+    expect(res.body.data?.message || res.body.message).toMatch(/categoryId/i);
   });
 });

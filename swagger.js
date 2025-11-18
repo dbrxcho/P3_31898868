@@ -4,7 +4,7 @@ const options = {
   definition: {
     openapi: '3.0.0',
     info: {
-      title: 'API P3_31898868. Vinilos Retro',   // nombre de tu API
+      title: 'API P3_31898868. Vinilos Retro', 
       version: '1.0.0',
       description: 'Documentación de la API para la gestión de productos, categorías y etiquetas.',
     },
@@ -14,6 +14,7 @@ const options = {
         description: 'Servidor local'
       }
     ],
+    
     components: {
       securitySchemes: {
         bearerAuth: {

@@ -7,7 +7,6 @@ const auth = require('../middlewares/auth');
 const adminCtrl = require('../controllers/products.admin.controller');
 const validateProduct = require('../middlewares/validateProduct.js');
 
-
 console.log('typeof validateProduct:', typeof validateProduct);
 console.log('validateProduct:', validateProduct);
 console.log('adminCtrl:', adminCtrl);
