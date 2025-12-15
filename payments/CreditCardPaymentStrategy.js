@@ -1,5 +1,5 @@
 const axios = require('axios');
-const PaymentStrategy = require('./paymentStrategy');
+const PaymentStrategy = require('./PaymentStrategy');
 
 class CreditCardPaymentStrategy extends PaymentStrategy {
   async processPayment(details, amount) {
