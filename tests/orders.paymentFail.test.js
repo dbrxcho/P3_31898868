@@ -16,12 +16,15 @@ describe('Orders - pago rechazado', () => {
   let token, product;
 
   beforeAll(async () => {
+    // sincroniza la base en memoria
     await sequelize.sync({ force: true });
+
     const user = await User.create({
       nombreCompleto: 'Test',
       email: 'test@example.com',
       password: 'hashed'
     });
+
     token = jwt.sign(
       { id: user.id },
       process.env.JWT_SECRET || 'secret',
@@ -56,5 +59,10 @@ describe('Orders - pago rechazado', () => {
 
     const updated = await Product.findByPk(product.id);
     expect(updated.stock).toBe(5); // rollback → stock intacto
+  });
+
+  afterAll(async () => {
+    // cerrar conexión de Sequelize para que Jest no se quede colgado
+    await sequelize.close();
   });
 });

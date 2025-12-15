@@ -7,7 +7,6 @@ jest.mock('axios', () => ({
   })
 }));
 
-
 const request = require('supertest');
 const app = require('../app');
 const { sequelize, User, Product, Category } = require('../models');
@@ -26,7 +25,11 @@ describe('Orders - éxito transaccional', () => {
       password: 'hashed'
     });
 
-    token = jwt.sign({ id: user.id }, process.env.JWT_SECRET || 'secret', { expiresIn: '1h' });
+    token = jwt.sign(
+      { id: user.id },
+      process.env.JWT_SECRET || 'secret',
+      { expiresIn: '1h' }
+    );
 
     // Crear categoría obligatoria
     const category = await Category.create({ name: 'Rock' });
@@ -73,5 +76,10 @@ describe('Orders - éxito transaccional', () => {
     console.log('📦 Stock actualizado del producto:', updated.stock);
 
     expect(updated.stock).toBe(3);
+  });
+
+  afterAll(async () => {
+    // cerrar conexión de Sequelize para que Jest no se quede colgado
+    await sequelize.close();
   });
 });

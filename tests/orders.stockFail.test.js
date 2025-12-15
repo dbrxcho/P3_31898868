@@ -17,11 +17,13 @@ describe('Orders - fallo por stock insuficiente', () => {
 
   beforeAll(async () => {
     await sequelize.sync({ force: true });
+
     const user = await User.create({
       nombreCompleto: 'Test',
       email: 'test@example.com',
       password: 'hashed'
     });
+
     token = jwt.sign(
       { id: user.id },
       process.env.JWT_SECRET || 'secret',
@@ -31,7 +33,7 @@ describe('Orders - fallo por stock insuficiente', () => {
     // Crear categoría primero
     const category = await Category.create({ name: 'Rock' });
 
-    // Crear producto con name y categoryId correctos
+    // Crear producto con stock limitado
     product = await Product.create({
       name: 'Vinilo',
       description: 'Edición limitada',
@@ -56,5 +58,10 @@ describe('Orders - fallo por stock insuficiente', () => {
 
     const updated = await Product.findByPk(product.id);
     expect(updated.stock).toBe(1); // stock intacto
+  });
+
+  afterAll(async () => {
+    // cerrar conexión de Sequelize para que Jest no se quede colgado
+    await sequelize.close();
   });
 });
