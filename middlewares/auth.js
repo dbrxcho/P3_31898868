@@ -1,6 +1,7 @@
 const jwt = require('jsonwebtoken');
+const { User } = require('../models');
 
-module.exports = (req, res, next) => {
+module.exports = async (req, res, next) => {
   const authHeader = req.headers.authorization;
 
   if (!authHeader || !authHeader.startsWith('Bearer ')) {
@@ -14,7 +15,17 @@ module.exports = (req, res, next) => {
 
   try {
     const decoded = jwt.verify(token, process.env.JWT_SECRET || 'secret');
-    req.user = decoded;
+
+    // Buscar el usuario en la BD
+    const user = await User.findByPk(decoded.id);
+    if (!user) {
+      return res.status(401).json({
+        status: 'fail',
+        data: { message: 'Usuario no encontrado' }
+      });
+    }
+
+    req.user = user; // 👈 ahora es el objeto User completo
     next();
   } catch (err) {
     return res.status(401).json({

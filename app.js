@@ -8,6 +8,8 @@ const usersRouter = require('./routes/users');
 const productsRouter = require('./routes/products');
 const categoriesRouter = require('./routes/categories');
 const tagsRouter = require('./routes/tags');
+const ordersRouter = require('./routes/orders');
+console.log('📂 ordersRouter cargado:', ordersRouter);
 const swaggerUi = require('swagger-ui-express');
 const swaggerSpec = require('./swagger');
 const { sequelize } = require('./models');
@@ -26,24 +28,24 @@ app.use(cors({
   allowedHeaders: ['Content-Type','Authorization']
 }));
 app.options('*', cors());
+
 // Rutas
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
 app.use('/products', productsRouter);
 app.use('/categories', categoriesRouter);
 app.use('/tags', tagsRouter);
+app.use('/orders', ordersRouter); // 👈 aquí montas la ruta de órdenes
 app.use('/auth', require('./routes/auth'));
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 
-
-
 // Health, Ping y About
 app.get('/ping', (req, res) => {
-  res.status(200).send(); // simple respuesta OK
+  res.status(200).send();
 });
 
 app.get('/health', (req, res) => {
-  res.status(200).json({ status: 'ok' }); // endpoint de health para tests y Render
+  res.status(200).json({ status: 'ok' });
 });
 
 app.get('/about', (req, res) => {
@@ -58,4 +60,3 @@ app.get('/about', (req, res) => {
 });
 
 module.exports = app;
-

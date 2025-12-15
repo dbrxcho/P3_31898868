@@ -6,7 +6,7 @@ const options = {
     info: {
       title: 'API P3_31898868. Vinilos Retro',
       version: '1.0.0',
-      description: 'Documentación de la API para la gestión de productos, categorías y etiquetas.',
+      description: 'Documentación de la API para la gestión de productos, categorías y etiquetas.'
     },
     servers: [
       {
@@ -62,6 +62,29 @@ const options = {
             id: { type: 'integer', example: 5 },
             nombre: { type: 'string', example: 'Edición Especial' }
           }
+        },
+        Order: {
+          type: 'object',
+          properties: {
+            id: { type: 'integer', example: 1 },
+            userId: { type: 'integer', example: 1 },
+            status: { type: 'string', example: 'COMPLETED' },
+            totalAmount: { type: 'number', example: 59.99 },
+            items: {
+              type: 'array',
+              items: { $ref: '#/components/schemas/OrderItem' }
+            }
+          }
+        },
+        OrderItem: {
+          type: 'object',
+          properties: {
+            id: { type: 'integer', example: 1 },
+            orderId: { type: 'integer', example: 1 },
+            productId: { type: 'integer', example: 10 },
+            quantity: { type: 'integer', example: 2 },
+            unitPrice: { type: 'number', example: 29.99 }
+          }
         }
       }
     },
@@ -71,7 +94,7 @@ const options = {
       }
     ]
   },
-  apis: ['./routes/*.js'], // aquí Swagger buscará anotaciones en tus rutas
+  apis: ['./routes/*.js'] // aquí Swagger buscará anotaciones en tus rutas
 };
 
 const swaggerSpec = swaggerJsdoc(options);
