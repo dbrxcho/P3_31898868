@@ -8,7 +8,7 @@ const router = express.Router();
 
 /**
  * @swagger
- * /auth/register:
+ * /api/auth/register:
  *   post:
  *     summary: Registrar un nuevo usuario
  *     tags: [Auth]
@@ -96,7 +96,7 @@ router.post('/register', async (req, res) => {
 
 /**
  * @swagger
- * /auth/login:
+ * /api/auth/login:
  *   post:
  *     summary: Iniciar sesión de usuario
  *     tags: [Auth]
@@ -203,7 +203,7 @@ router.post('/login', async (req, res) => {
 
 /**
  * @swagger
- * /auth/me:
+ * /api/auth/me:
  *   get:
  *     summary: Obtener datos del usuario autenticado
  *     tags: [Auth]
