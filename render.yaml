@@ -16,3 +16,4 @@ services:
     autoDeploy: true
 
 # Note: set any required environment variables in the Render dashboard (e.g. NODE_ENV, DB settings).  
+# The backend should be configured to serve the frontend build files and handle API requests appropriately.
