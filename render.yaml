@@ -11,8 +11,8 @@ services:
     env: node
     plan: free
     buildCommand: >
-      npm --prefix frontend ci && npm --prefix frontend run build && npm --prefix backend ci
-    startCommand: npm --prefix backend start
+      cd frontend && npm install && npm run build && cd .. && cd backend && npm install
+    startCommand: node backend/server.js
     autoDeploy: true
 
 # Note: set any required environment variables in the Render dashboard (e.g. NODE_ENV, DB settings).  
