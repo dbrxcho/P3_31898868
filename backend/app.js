@@ -80,19 +80,14 @@ app.get('/about', (req, res) => {
   });
 });
 
-// Integración del Frontend
-// Sirve los archivos estáticos generados por el build del frontend
-const frontendPath = path.join(__dirname, '../frontend/build'); // CRA build path
 
-// Si existe el build, sirve los assets estáticos y un fallback para la SPA
-if (fs.existsSync(frontendPath)) {
-  app.use(express.static(frontendPath));
-  app.get('*', (req, res) => {
-    res.sendFile(path.join(frontendPath, 'index.html'));
-  });
-} else {
-  // En desarrollo local sin build disponible no hacemos nada
-  console.log('Frontend build no encontrado en:', frontendPath);
-} 
+// Integración del Frontend
+// Sirve los archivos estáticos generados por el build del frontend (si existe)
+const frontendPath = path.join(__dirname, '../frontend/build');
+app.use(express.static(frontendPath));
+// Fallback para SPA: cualquier ruta no-API responde con index.html
+app.get(/^\/(?!api|api-docs).*/, (req, res) => {
+  res.sendFile(path.join(frontendPath, 'index.html'));
+});
 
 module.exports = app;
