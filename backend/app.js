@@ -1,5 +1,6 @@
 const express = require('express');
 const path = require('path');
+const fs = require('fs');
 const cookieParser = require('cookie-parser');
 const logger = require('morgan');
 const cors = require('cors');
@@ -81,14 +82,17 @@ app.get('/about', (req, res) => {
 
 // Integración del Frontend
 // Sirve los archivos estáticos generados por el build del frontend
-//   const frontendPath = path.join(__dirname, '../frontend/build'); // si usas Vite
-// const frontendPath = path.join(__dirname, '../frontend/build'); // si usas CRA (create-react-app)
+const frontendPath = path.join(__dirname, '../frontend/build'); // CRA build path
 
-//   app.use(express.static(frontendPath));
-
-// Fallback para SPA (React/Vue Router)
-//   app.get('*', (req, res) => {
-//     res.sendFile(path.join(frontendPath, 'index.html'));
-//   });
+// Si existe el build, sirve los assets estáticos y un fallback para la SPA
+if (fs.existsSync(frontendPath)) {
+  app.use(express.static(frontendPath));
+  app.get('*', (req, res) => {
+    res.sendFile(path.join(frontendPath, 'index.html'));
+  });
+} else {
+  // En desarrollo local sin build disponible no hacemos nada
+  console.log('Frontend build no encontrado en:', frontendPath);
+} 
 
 module.exports = app;

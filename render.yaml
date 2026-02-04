@@ -1,0 +1,18 @@
+# Render configuration for this monorepo
+
+# This Render manifest defines a single Web Service which:
+# - builds the frontend (CRA) into `frontend/build`
+# - installs backend deps and starts the backend which serves the SPA
+# This produces a single public URL that serves the frontend and proxies API requests to /api/*
+
+services:
+  - type: web
+    name: p3-31898868
+    env: node
+    plan: free
+    buildCommand: >
+      npm --prefix frontend ci && npm --prefix frontend run build && npm --prefix backend ci
+    startCommand: npm --prefix backend start
+    autoDeploy: true
+
+# Note: set any required environment variables in the Render dashboard (e.g. NODE_ENV, DB settings).  

@@ -6,6 +6,9 @@
     "backend": "cd backend && npm start",
     "frontend": "cd frontend && npm start",
     "dev": "concurrently \"npm run backend\" \"cross-env REACT_APP_API_URL=http://localhost:3000/api PORT=3001 npm start --prefix frontend\"",
+    "build": "npm --prefix frontend install && npm --prefix frontend run build",
+    "start": "node backend/bin/www",
+    "postinstall": "npm --prefix frontend ci --silent && npm --prefix frontend run build",
     "test": "cd backend && npm test && cd ../frontend && npm test"
   },
   "devDependencies": {
