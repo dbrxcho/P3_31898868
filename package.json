@@ -1,29 +1,15 @@
 {
-  "name": "p3-31898868",
-  "version": "0.0.0",
+  "name": "p3_31898868",
+  "version": "1.0.0",
   "private": true,
   "scripts": {
-    "test": "jest",
-    "start": "node ./bin/www"
-  },
-  "dependencies": {
-    "axios": "^1.13.2",
-    "bcrypt": "^6.0.0",
-    "bcryptjs": "^3.0.3",
-    "cookie-parser": "~1.4.4",
-    "cors": "^2.8.5",
-    "debug": "~2.6.9",
-    "express": "~4.16.1",
-    "jsonwebtoken": "^9.0.2",
-    "morgan": "~1.9.1",
-    "sequelize": "^6.37.7",
-    "slugify": "^1.6.6",
-    "sqlite3": "^5.1.7",
-    "swagger-jsdoc": "^6.2.8",
-    "swagger-ui-express": "^5.0.1"
+    "backend": "cd backend && npm start",
+    "frontend": "cd frontend && npm start",
+    "dev": "concurrently \"npm run backend\" \"cross-env REACT_APP_API_URL=http://localhost:3000/api PORT=3001 npm start --prefix frontend\"",
+    "test": "cd backend && npm test && cd ../frontend && npm test"
   },
   "devDependencies": {
-    "jest": "^30.2.0",
-    "supertest": "^7.1.4"
+    "concurrently": "^8.2.2",
+    "cross-env": "^10.1.0"
   }
 }

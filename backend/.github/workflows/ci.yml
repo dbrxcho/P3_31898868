@@ -1,0 +1,25 @@
+name: Node.js CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '22'  # Usa la misma versión que tienes localmente
+
+      - name: Install dependencies
+        run: npm ci  # Instala desde package-lock.json para evitar inconsistencias
+
+      - name: Run tests
+        run: npx jest --detectOpenHandles  # Ejecuta Jest directamente desde node_modules
